@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "Person.h"
 #import "Boy.h"
+#import "SignatureModel.h"
 #import <objc/runtime.h>
 
 @interface ViewController ()
@@ -29,6 +30,10 @@
     [self exchangeMethod];
     
     [self printPerson];
+    
+    NSLog(@"----------- NSInvocation用法 -----------");
+    [self signatureInvocation];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -212,5 +217,64 @@ void swizzleMethod(Class class, SEL originalSelector, SEL swizzledSelector)
     }
     
 }
+
+- (void)signatureInvocation {
+    
+    SignatureModel *signatureModel =  [[SignatureModel alloc] init];
+    SEL myMethod = @selector(myLog);
+    SEL myMethod2 = @selector(myLog:param:parm:);
+    
+    // 创建一个函数签名，这个签名可以是任意的，但需要注意，签名函数的参数数量要和调用的一致。
+    NSMethodSignature *sig = [[SignatureModel class] instanceMethodSignatureForSelector:myMethod];
+    NSMethodSignature *sig2 = [[SignatureModel class] instanceMethodSignatureForSelector:myMethod2];
+    
+    // 通过签名初始化
+    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:sig];
+    NSInvocation *invocation2 = [NSInvocation invocationWithMethodSignature:sig2];
+    //注意：target不要设置成局部变量
+    invocation.target = signatureModel;
+    invocation2.target = signatureModel;
+    
+    // 设置selector
+    [invocation setSelector:myMethod];
+    [invocation2 setSelector:myMethod2];
+    
+    int a = 1, b = 2, c = 3;
+    // 注意：1、这里设置参数的Index 需要从2开始，因为前两个被selector和target占用。
+    [invocation2 setArgument:&a atIndex:2];
+    [invocation2 setArgument:&b atIndex:3];
+    [invocation2 setArgument:&c atIndex:4];
+    
+    //将c的值设置为返回值
+    [invocation2 setReturnValue:&c];
+    int d;
+    // 取这个返回值
+    [invocation2 getReturnValue:&d];
+    NSLog(@"d:%d", d);
+    
+    //调用方法
+    [invocation invoke];
+    //[invocation2 invoke];
+    [invocation2 invokeWithTarget:signatureModel];
+    
+    // 获取参数个数
+    NSInteger count = sig2.numberOfArguments;
+    
+    // 打印所有参数类型，
+    // 这里打印的结果是  @ : i i i  它们是Objective-C类型编码
+    // @ 表示 NSObject* 或 id 类型
+    // : 表示 SEL 类型
+    // i 表示 int 类型
+    for (int i = 0; i < (int)count; i++) {
+        const char *argTybe = [sig2 getArgumentTypeAtIndex:i];
+        NSLog(@"参数类型 %s",argTybe);
+    }
+    
+    // 获取返回值的类型
+    const char *returnType = [sig2 methodReturnType];
+    NSLog(@"返回值的类型 %s",returnType);
+}
+
+
 
 @end

@@ -15,6 +15,7 @@
 		2EC255FA204922F700A44D8C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC255F9204922F700A44D8C /* main.m */; };
 		2EC256022049231400A44D8C /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC256012049231400A44D8C /* Person.m */; };
 		2EC256082049241D00A44D8C /* Boy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC256072049241D00A44D8C /* Boy.m */; };
+		2EC2560E2049413E00A44D8C /* SignatureModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC2560D2049413E00A44D8C /* SignatureModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,8 @@
 		2EC256012049231400A44D8C /* Person.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		2EC256062049241D00A44D8C /* Boy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Boy.h; sourceTree = "<group>"; };
 		2EC256072049241D00A44D8C /* Boy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Boy.m; sourceTree = "<group>"; };
+		2EC2560C2049413E00A44D8C /* SignatureModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignatureModel.h; sourceTree = "<group>"; };
+		2EC2560D2049413E00A44D8C /* SignatureModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignatureModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +75,8 @@
 				2EC256012049231400A44D8C /* Person.m */,
 				2EC256062049241D00A44D8C /* Boy.h */,
 				2EC256072049241D00A44D8C /* Boy.m */,
+				2EC2560C2049413E00A44D8C /* SignatureModel.h */,
+				2EC2560D2049413E00A44D8C /* SignatureModel.m */,
 				2EC255F0204922F700A44D8C /* Main.storyboard */,
 				2EC255F3204922F700A44D8C /* Assets.xcassets */,
 				2EC255F5204922F700A44D8C /* LaunchScreen.storyboard */,
@@ -154,6 +159,7 @@
 			files = (
 				2EC255EF204922F700A44D8C /* ViewController.m in Sources */,
 				2EC255FA204922F700A44D8C /* main.m in Sources */,
+				2EC2560E2049413E00A44D8C /* SignatureModel.m in Sources */,
 				2EC256082049241D00A44D8C /* Boy.m in Sources */,
 				2EC256022049231400A44D8C /* Person.m in Sources */,
 				2EC255EC204922F700A44D8C /* AppDelegate.m in Sources */,
