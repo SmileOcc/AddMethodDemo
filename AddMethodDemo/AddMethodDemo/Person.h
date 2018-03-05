@@ -11,6 +11,11 @@
 @interface Person : NSObject
 
 @property(nonatomic,copy,nullable)NSString *age;
+
+- (void)name:(NSString *)name sex:(NSString *)sex;
 - (void)name;
 - (void)sex;
+
+
++ (void)personTest;
 @end
