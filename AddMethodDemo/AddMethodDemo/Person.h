@@ -8,7 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Person : NSObject
+@protocol RuntimeBaseProtocol <NSObject>
+@optional
+- (void)doBaseAction;
+
+@end
+
+@protocol RuntimeProtocol <NSObject,RuntimeBaseProtocol>
+
+@optional
+- (void)doOptionalAction;
+
+@end
+
+
+@interface Person : NSObject<RuntimeProtocol>
 
 @property(nonatomic,copy,nullable)NSString *age;
 

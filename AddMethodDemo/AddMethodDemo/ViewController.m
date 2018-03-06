@@ -7,9 +7,11 @@
 //
 
 #import "ViewController.h"
+#import "TwoCtrl.h"
 #import "Person.h"
 #import "Boy.h"
 #import "SignatureModel.h"
+#import "Message.h"
 #import "UIControl+Event.h"
 #import <objc/runtime.h>
 
@@ -17,6 +19,8 @@
 
 @interface ViewController ()
 @property (nonatomic, strong) UIButton    *oneBtn;
+@property (nonatomic, strong) UIButton    *twoBtn;
+@property (nonatomic, strong) Person      *person;
 
 @end
 
@@ -25,6 +29,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    _person = [[Person alloc] init];
+    
+    if (3 == 3 /*|| 4 == 4*/) {
+        
+    }
     NSLog(@"\n\n----------- 添加方法 -----------");
     [self addMethod];
     NSLog(@"\n\n--------- 发送消息 ----------");
@@ -44,7 +53,12 @@
     [self addButtonTime];
     NSLog(@"\n\n----------- 动态类 -----------");
     [self allocClass];
-
+    
+    NSLog(@"\n\n----------- 拦截转发消息 -------------");
+    [self messageTest];
+    
+    //
+    [self addButtonVC];
 }
 
 
@@ -187,7 +201,7 @@
  */
 - (void)printPerson{
     
-    NSLog(@"\n\n\n---------------ivar list-----------------");
+    NSLog(@"\n\n\n---------------获取成员变量列表-----------------");
     unsigned int count;
     //ivar
     Ivar *ivars = class_copyIvarList([Person class], &count);
@@ -195,18 +209,78 @@
         Ivar ivar = ivars[i];
         NSLog(@"ivar === %s",ivar_getName(ivar));
     }
-    NSLog(@"\n\n\n--------------method list------------------");
+    NSLog(@"\n\n\n--------------方法列表------------------");
     Method *methods = class_copyMethodList([Person class], &count);
     for (int i = 0; i < count; i ++) {
         Method method  = methods[i];
         NSLog(@"method == %s",method_getName(method));
     }
-    NSLog(@"\n\n\n--------------property list------------------");
+    NSLog(@"\n\n\n--------------属性列表------------------");
     objc_property_t *propertys = class_copyPropertyList([Person class], &count);
     for (int i = 0; i < count; i ++) {
         objc_property_t property = propertys[i];
         NSLog(@"property === %s",property_getName(property));
     }
+    
+    NSLog(@"\n\n\n--------------协议列表------------------");
+    Protocol * __unsafe_unretained *protocolList = class_copyProtocolList([_person class],&count);
+    for (int i = 0; i < count; i++) {
+        Protocol *protocol = protocolList[i];
+        NSLog(@"%s",protocol_getName(protocol));
+    }
+
+    
+    //获取类中指定名称实例成员变量的信息
+    Ivar ivar = class_getInstanceVariable([Person class],"_age");
+    // 获取成员变量类型编码, 获取成员变量名
+    NSLog(@"\n\n%s%s%s",__func__,ivar_getTypeEncoding(ivar),ivar_getName(ivar));
+    
+    // 类实例是否响应指定的selector
+    BOOL flag = class_respondsToSelector([Person class], @selector(name:sex:));
+
+    //获取类制定方法的信息
+    Method method = class_getInstanceMethod([Person class], @selector(name:sex:));
+    NSLog(@"%s",sel_getName(method_getName(method)));
+    
+    //获取类方法的信息
+    Method method2 = class_getClassMethod([Person class], @selector(personTest));
+    NSLog(@"%s %u",sel_getName(method_getName(method2)) ,method_getNumberOfArguments(method2));
+    
+    //获取属性的信息
+    objc_property_t property = class_getProperty([self class],"person");
+    NSLog(@"%s %s",property_getName(property) ,property_getAttributes(property));
+
+    //获取属性的特性列表
+    unsigned int outCount;
+    objc_property_attribute_t *objc_property_attributes = property_copyAttributeList(property,&outCount);
+    for (int i = 0; i < outCount; i++) {
+        objc_property_attribute_t objc_property_attribute = objc_property_attributes[i];
+        NSLog(@"%s %s",objc_property_attribute.name,property_copyAttributeValue(property,objc_property_attribute.name));
+    }
+    
+    //获取方法具体实现
+    IMP imp = class_getMethodImplementation([Person class], @selector(name:sex:));
+
+    /**
+     *  添加属性
+     *
+     *  class          类
+     *  name           属性名
+     *  attributes     参数
+     *  attributeCount 参数数量
+     */
+    objc_property_attribute_t type = { "T", "@\"NSString\"" };
+    objc_property_attribute_t ownership = { "&", "N" }; // C = copy
+    objc_property_attribute_t backingivar  = { "V", "" };
+    objc_property_attribute_t attrs[] = { type, ownership, backingivar };
+    
+    if (class_addProperty([Person class], "country", attrs, 3)) {
+        NSLog(@"%sadd Property success",__func__);
+    }else{
+        NSLog(@"%sadd Property fail",__func__);
+    }
+
+    
 }
 - (void)addParam:(NSString *)str{
     NSLog(@"----- %@",str);
@@ -328,6 +402,21 @@ void swizzleMethod(Class class, SEL originalSelector, SEL swizzledSelector)
     NSLog(@"-- 测试间隔");
 }
 
+- (void)addButtonVC {
+    
+    _twoBtn =[[UIButton alloc]initWithFrame:CGRectMake(100,160,150,40)];
+    [_twoBtn setTitle:@"跳转" forState:UIControlStateNormal];
+    [_twoBtn setTitleColor:[UIColor redColor]forState:UIControlStateNormal];
+    [self.view addSubview:_twoBtn];
+    [_twoBtn addTarget:self action:@selector(btnEvent2)forControlEvents:UIControlEventTouchUpInside];
+
+}
+
+- (void)btnEvent2 {
+    
+    TwoCtrl *vc = [[TwoCtrl alloc] init];
+    [self presentViewController:vc animated:YES completion:nil];
+}
 
 /**
  * 动态创建类
@@ -346,15 +435,6 @@ void swizzleMethod(Class class, SEL originalSelector, SEL swizzledSelector)
     if (!kclass) {
         kclass = objc_allocateClassPair(NSClassFromString(@"UIViewController"), className, 0);
     }
-    
-    /**
-     *  添加属性
-     *
-     *  class          类
-     *  name           属性名
-     *  attributes     参数
-     *  attributeCount 参数数量
-     */
     
     objc_property_attribute_t type = {"T", "@\"NSString\""};
     objc_property_attribute_t ownership = { "C", "" };
@@ -393,4 +473,10 @@ void swizzleMethod(Class class, SEL originalSelector, SEL swizzledSelector)
     }
 }
 
+- (void)messageTest {
+    Message *message = [Message new];
+    [message sendMessage:@"临渊羡鱼不如退而结网"];
+    [message sendMsg];
+    [message sendMessage:@"烟波" name:@"寒江"];
+}
 @end

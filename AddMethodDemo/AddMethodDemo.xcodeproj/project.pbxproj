@@ -17,6 +17,9 @@
 		2EC256082049241D00A44D8C /* Boy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC256072049241D00A44D8C /* Boy.m */; };
 		2EC2560E2049413E00A44D8C /* SignatureModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC2560D2049413E00A44D8C /* SignatureModel.m */; };
 		2EC25616204CD4C100A44D8C /* UIControl+Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC25615204CD4C100A44D8C /* UIControl+Event.m */; };
+		2EC2561D204E2B7400A44D8C /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC2561C204E2B7400A44D8C /* Message.m */; };
+		2EC25620204E2B9E00A44D8C /* MessageForwarding.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC2561F204E2B9E00A44D8C /* MessageForwarding.m */; };
+		2EC25623204E497D00A44D8C /* TwoCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC25622204E497D00A44D8C /* TwoCtrl.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +41,12 @@
 		2EC2560D2049413E00A44D8C /* SignatureModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignatureModel.m; sourceTree = "<group>"; };
 		2EC25614204CD4C100A44D8C /* UIControl+Event.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIControl+Event.h"; sourceTree = "<group>"; };
 		2EC25615204CD4C100A44D8C /* UIControl+Event.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIControl+Event.m"; sourceTree = "<group>"; };
+		2EC2561B204E2B7400A44D8C /* Message.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
+		2EC2561C204E2B7400A44D8C /* Message.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
+		2EC2561E204E2B9E00A44D8C /* MessageForwarding.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageForwarding.h; sourceTree = "<group>"; };
+		2EC2561F204E2B9E00A44D8C /* MessageForwarding.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageForwarding.m; sourceTree = "<group>"; };
+		2EC25621204E497D00A44D8C /* TwoCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TwoCtrl.h; sourceTree = "<group>"; };
+		2EC25622204E497D00A44D8C /* TwoCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TwoCtrl.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,12 +83,18 @@
 				2EC255EB204922F700A44D8C /* AppDelegate.m */,
 				2EC255ED204922F700A44D8C /* ViewController.h */,
 				2EC255EE204922F700A44D8C /* ViewController.m */,
+				2EC25621204E497D00A44D8C /* TwoCtrl.h */,
+				2EC25622204E497D00A44D8C /* TwoCtrl.m */,
 				2EC256002049231400A44D8C /* Person.h */,
 				2EC256012049231400A44D8C /* Person.m */,
 				2EC256062049241D00A44D8C /* Boy.h */,
 				2EC256072049241D00A44D8C /* Boy.m */,
 				2EC2560C2049413E00A44D8C /* SignatureModel.h */,
 				2EC2560D2049413E00A44D8C /* SignatureModel.m */,
+				2EC2561B204E2B7400A44D8C /* Message.h */,
+				2EC2561C204E2B7400A44D8C /* Message.m */,
+				2EC2561E204E2B9E00A44D8C /* MessageForwarding.h */,
+				2EC2561F204E2B9E00A44D8C /* MessageForwarding.m */,
 				2EC25614204CD4C100A44D8C /* UIControl+Event.h */,
 				2EC25615204CD4C100A44D8C /* UIControl+Event.m */,
 				2EC255F0204922F700A44D8C /* Main.storyboard */,
@@ -163,12 +178,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				2EC255EF204922F700A44D8C /* ViewController.m in Sources */,
+				2EC2561D204E2B7400A44D8C /* Message.m in Sources */,
 				2EC255FA204922F700A44D8C /* main.m in Sources */,
 				2EC2560E2049413E00A44D8C /* SignatureModel.m in Sources */,
+				2EC25620204E2B9E00A44D8C /* MessageForwarding.m in Sources */,
 				2EC256082049241D00A44D8C /* Boy.m in Sources */,
 				2EC25616204CD4C100A44D8C /* UIControl+Event.m in Sources */,
 				2EC256022049231400A44D8C /* Person.m in Sources */,
 				2EC255EC204922F700A44D8C /* AppDelegate.m in Sources */,
+				2EC25623204E497D00A44D8C /* TwoCtrl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
